@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Player and Wall Collision</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const canvas = document.getElementById("myCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let playerX = 50; // Initial X position of the player
+      let playerY = 50; // Initial Y position of the player
+      const playerSize = 30; // Size of the player
+
+      const wallX = 300; // X position of the wall
+      const wallY = 100; // Y position of the wall
+      const wallWidth = 20; // Width of the wall
+      const wallHeight = 200; // Height of the wall
+
+      function drawPlayer() {
+        ctx.fillStyle = "blue";
+        ctx.fillRect(playerX, playerY, playerSize, playerSize);
+      }
+
+      function drawWall() {
+        ctx.fillStyle = "grey";
+        ctx.fillRect(wallX, wallY, wallWidth, wallHeight);
+      }
+
+      function checkCollision() {
+        if (
+          playerX < wallX + wallWidth &&
+          playerX + playerSize > wallX &&
+          playerY < wallY + wallHeight &&
+          playerY + playerSize > wallY
+        ) {
+          playerX = 50; // Reset player X position
+          playerY = 50; // Reset player Y position
+        }
+      }
+
+      function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+
+      function update() {
+        clearCanvas();
+        drawPlayer();
+        drawWall();
+        checkCollision();
+      }
+
+      document.addEventListener("keydown", function (event) {
+        const speed = 5;
+        switch (event.key) {
+          case "ArrowUp":
+            playerY -= speed;
+            break;
+          case "ArrowDown":
+            playerY += speed;
+            break;
+          case "ArrowLeft":
+            playerX -= speed;
+            break;
+          case "ArrowRight":
+            playerX += speed;
+            break;
+          case "w":
+            playerY -= speed;
+            break;
+          case "s":
+            playerY += speed;
+            break;
+          case "a":
+            playerX -= speed;
+            break;
+          case "d":
+            playerX += speed;
+            break;
+        }
+        update();
+      });
+
+      update();
+    </script>
+  </body>
+</html>
